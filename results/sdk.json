@@ -1,0 +1,327 @@
+{
+  "scenario_id": "study_planning_persistent_preferences",
+  "implementation": "claude_agent_sdk",
+  "mode": "offline",
+  "model": "offline-sdk",
+  "aggregate_metrics": {
+    "turns": 6,
+    "model_calls": 0,
+    "tool_calls": 10,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "estimated_cost_usd": 0.0,
+    "latency_seconds": 0.001671
+  },
+  "session_ids": {
+    "session_1": "offline-sdk-session-session_1",
+    "session_2": "offline-sdk-session-session_1"
+  },
+  "turns": [
+    {
+      "session_id": "session_1",
+      "turn": 1,
+      "user": "Show me my upcoming study tasks and check my calendar for the days they are due.",
+      "response": "Upcoming tasks: Mathematics due 2026-10-25 (completed, high); Biology due 2026-10-28 (not_started, medium); History due 2026-10-30 (not_started, low); calendar days checked: 2026-10-25, 2026-10-28, 2026-10-30",
+      "tool_calls": [
+        {
+          "name": "get_study_tasks",
+          "input": {
+            "filter_status": null
+          },
+          "result": [
+            {
+              "id": 1,
+              "subject": "Mathematics",
+              "due_date": "2026-10-25",
+              "status": "completed",
+              "priority": "high"
+            },
+            {
+              "id": 2,
+              "subject": "Biology",
+              "due_date": "2026-10-28",
+              "status": "not_started",
+              "priority": "medium"
+            },
+            {
+              "id": 3,
+              "subject": "History",
+              "due_date": "2026-10-30",
+              "status": "not_started",
+              "priority": "low"
+            }
+          ],
+          "is_error": false
+        },
+        {
+          "name": "get_calendar_events",
+          "input": {
+            "date_str": "2026-10-25"
+          },
+          "result": {
+            "date": "2026-10-25",
+            "day_of_week": "Sunday",
+            "events": [
+              {
+                "title": "Study group",
+                "start_time": "15:00",
+                "location": "Library"
+              }
+            ]
+          },
+          "is_error": false
+        },
+        {
+          "name": "get_calendar_events",
+          "input": {
+            "date_str": "2026-10-28"
+          },
+          "result": {
+            "date": "2026-10-28",
+            "day_of_week": "Wednesday",
+            "events": [
+              {
+                "title": "Biology lab",
+                "start_time": "10:00",
+                "location": "Science building"
+              }
+            ]
+          },
+          "is_error": false
+        },
+        {
+          "name": "get_calendar_events",
+          "input": {
+            "date_str": "2026-10-30"
+          },
+          "result": {
+            "date": "2026-10-30",
+            "day_of_week": "Friday",
+            "events": []
+          },
+          "is_error": false
+        }
+      ],
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "estimated": true
+      },
+      "cost_delta_usd": 0.0,
+      "model_calls": 0,
+      "latency_seconds": 0.000166,
+      "context": {
+        "resumed_sdk_session_id": "offline-sdk-session-session_1"
+      }
+    },
+    {
+      "session_id": "session_1",
+      "turn": 2,
+      "user": "Mark my Mathematics task as completed.",
+      "response": "Task status updated: completed.",
+      "tool_calls": [
+        {
+          "name": "update_task_status",
+          "input": {
+            "task_id": 1,
+            "status": "completed"
+          },
+          "result": {
+            "id": 1,
+            "subject": "Mathematics",
+            "due_date": "2026-10-25",
+            "status": "completed",
+            "priority": "high"
+          },
+          "is_error": false
+        }
+      ],
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "estimated": true
+      },
+      "cost_delta_usd": 0.0,
+      "model_calls": 0,
+      "latency_seconds": 0.000365,
+      "context": {
+        "resumed_sdk_session_id": "offline-sdk-session-session_1"
+      }
+    },
+    {
+      "session_id": "session_1",
+      "turn": 3,
+      "user": "I prefer studying in the evening only. Please remember this for future planning.",
+      "response": "Saved preference: evening only.",
+      "tool_calls": [
+        {
+          "name": "save_memory",
+          "input": {
+            "key": "study_time_preference",
+            "value": "evening only"
+          },
+          "result": {
+            "saved": true,
+            "key": "study_time_preference"
+          },
+          "is_error": false
+        }
+      ],
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "estimated": true
+      },
+      "cost_delta_usd": 0.0,
+      "model_calls": 0,
+      "latency_seconds": 0.000826,
+      "context": {
+        "resumed_sdk_session_id": "offline-sdk-session-session_1"
+      }
+    },
+    {
+      "session_id": "session_2",
+      "turn": 4,
+      "user": "Retrieve my saved study preference and recommend a schedule for my remaining tasks.",
+      "response": "Saved preference: evening only. Remaining tasks: Biology due 2026-10-28, History due 2026-10-30. Suggested study time: evening only.",
+      "tool_calls": [
+        {
+          "name": "get_memory",
+          "input": {
+            "key": "study_time_preference"
+          },
+          "result": {
+            "study_time_preference": "evening only"
+          },
+          "is_error": false
+        },
+        {
+          "name": "get_study_tasks",
+          "input": {},
+          "result": [
+            {
+              "id": 1,
+              "subject": "Mathematics",
+              "due_date": "2026-10-25",
+              "status": "completed",
+              "priority": "high"
+            },
+            {
+              "id": 2,
+              "subject": "Biology",
+              "due_date": "2026-10-28",
+              "status": "not_started",
+              "priority": "medium"
+            },
+            {
+              "id": 3,
+              "subject": "History",
+              "due_date": "2026-10-30",
+              "status": "not_started",
+              "priority": "low"
+            }
+          ],
+          "is_error": false
+        }
+      ],
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "estimated": true
+      },
+      "cost_delta_usd": 0.0,
+      "model_calls": 0,
+      "latency_seconds": 0.000168,
+      "context": {
+        "resumed_sdk_session_id": "offline-sdk-session-session_1"
+      }
+    },
+    {
+      "session_id": "session_2",
+      "turn": 5,
+      "user": "Actually, make me a study plan for tomorrow morning.",
+      "response": "Your saved preference is evening-only, which conflicts with a morning plan. Would you like to change your saved preference?",
+      "tool_calls": [],
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "estimated": true
+      },
+      "cost_delta_usd": 0.0,
+      "model_calls": 0,
+      "latency_seconds": 1.1e-05,
+      "context": {
+        "resumed_sdk_session_id": "offline-sdk-session-session_1"
+      }
+    },
+    {
+      "session_id": "session_2",
+      "turn": 6,
+      "user": "Summarize my progress and the study preference you have saved.",
+      "response": "Completed: Mathematics. Remaining: Biology, History. Saved preference: evening only.",
+      "tool_calls": [
+        {
+          "name": "get_study_tasks",
+          "input": {},
+          "result": [
+            {
+              "id": 1,
+              "subject": "Mathematics",
+              "due_date": "2026-10-25",
+              "status": "completed",
+              "priority": "high"
+            },
+            {
+              "id": 2,
+              "subject": "Biology",
+              "due_date": "2026-10-28",
+              "status": "not_started",
+              "priority": "medium"
+            },
+            {
+              "id": 3,
+              "subject": "History",
+              "due_date": "2026-10-30",
+              "status": "not_started",
+              "priority": "low"
+            }
+          ],
+          "is_error": false
+        },
+        {
+          "name": "get_memory",
+          "input": {},
+          "result": {
+            "study_time_preference": "evening only"
+          },
+          "is_error": false
+        }
+      ],
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "estimated": true
+      },
+      "cost_delta_usd": 0.0,
+      "model_calls": 0,
+      "latency_seconds": 0.000135,
+      "context": {
+        "resumed_sdk_session_id": "offline-sdk-session-session_1"
+      }
+    }
+  ]
+}

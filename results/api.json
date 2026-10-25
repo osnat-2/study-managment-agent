@@ -1,0 +1,204 @@
+{
+  "scenario_id": "study_planning_persistent_preferences",
+  "implementation": "raw_messages_api",
+  "mode": "offline",
+  "model": "claude-3-5-sonnet-20241022",
+  "aggregate_metrics": {
+    "turns": 6,
+    "api_calls": 10,
+    "tool_calls": 7,
+    "input_tokens": 9861,
+    "output_tokens": 410,
+    "estimated_cost_usd": 0.035733,
+    "latency_seconds": 0.006741
+  },
+  "turns": [
+    {
+      "session_id": "session_1",
+      "turn": 1,
+      "user": "Show me my upcoming study tasks and check my calendar for the days they are due.",
+      "response": "Upcoming tasks: Mathematics due 2026-10-25 (in_progress, high); Biology due 2026-10-28 (not_started, medium); History due 2026-10-30 (not_started, low)",
+      "tool_calls": [
+        {
+          "name": "get_study_tasks",
+          "input": {
+            "filter_status": null
+          },
+          "is_error": false
+        },
+        {
+          "name": "get_calendar_events",
+          "input": {
+            "date_str": "2026-10-25"
+          },
+          "is_error": false
+        },
+        {
+          "name": "get_calendar_events",
+          "input": {
+            "date_str": "2026-10-28"
+          },
+          "is_error": false
+        },
+        {
+          "name": "get_calendar_events",
+          "input": {
+            "date_str": "2026-10-30"
+          },
+          "is_error": false
+        }
+      ],
+      "usage": {
+        "input_tokens": 1796,
+        "output_tokens": 171,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tokens": 1967,
+        "estimated": true,
+        "estimated_cost_usd": 0.007953
+      },
+      "api_calls": 2,
+      "latency_seconds": 0.001587,
+      "context": {
+        "estimated_tokens": 160,
+        "compacted": false
+      }
+    },
+    {
+      "session_id": "session_1",
+      "turn": 2,
+      "user": "Mark my Mathematics task as completed.",
+      "response": "Offline run: Mathematics task marked completed.",
+      "tool_calls": [
+        {
+          "name": "update_task_status",
+          "input": {
+            "task_id": 1,
+            "status": "completed"
+          },
+          "is_error": false
+        }
+      ],
+      "usage": {
+        "input_tokens": 2367,
+        "output_tokens": 54,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tokens": 2421,
+        "estimated": true,
+        "estimated_cost_usd": 0.007911
+      },
+      "api_calls": 2,
+      "latency_seconds": 0.001795,
+      "context": {
+        "estimated_tokens": 667,
+        "compacted": false
+      }
+    },
+    {
+      "session_id": "session_1",
+      "turn": 3,
+      "user": "I prefer studying in the evening only. Please remember this for future planning.",
+      "response": "Offline run: evening-only preference saved to disk.",
+      "tool_calls": [
+        {
+          "name": "save_memory",
+          "input": {
+            "key": "study_time_preference",
+            "value": "evening only"
+          },
+          "is_error": false
+        }
+      ],
+      "usage": {
+        "input_tokens": 2670,
+        "output_tokens": 57,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tokens": 2727,
+        "estimated": true,
+        "estimated_cost_usd": 0.008865
+      },
+      "api_calls": 2,
+      "latency_seconds": 0.001408,
+      "context": {
+        "estimated_tokens": 831,
+        "compacted": false
+      }
+    },
+    {
+      "session_id": "session_2",
+      "turn": 4,
+      "user": "Retrieve my saved study preference and recommend a schedule for my remaining tasks.",
+      "response": "Offline run: saved preference retrieved; schedule uses evening study sessions.",
+      "tool_calls": [
+        {
+          "name": "get_memory",
+          "input": {
+            "key": "study_time_preference"
+          },
+          "is_error": false
+        }
+      ],
+      "usage": {
+        "input_tokens": 1376,
+        "output_tokens": 56,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tokens": 1432,
+        "estimated": true,
+        "estimated_cost_usd": 0.004968
+      },
+      "api_calls": 2,
+      "latency_seconds": 0.001245,
+      "context": {
+        "estimated_tokens": 188,
+        "compacted": false
+      }
+    },
+    {
+      "session_id": "session_2",
+      "turn": 5,
+      "user": "Actually, make me a study plan for tomorrow morning.",
+      "response": "Your saved preference is evening-only, which conflicts with a morning plan. Would you like me to change your saved preference?",
+      "tool_calls": [],
+      "usage": {
+        "input_tokens": 793,
+        "output_tokens": 39,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tokens": 832,
+        "estimated": true,
+        "estimated_cost_usd": 0.002964
+      },
+      "api_calls": 1,
+      "latency_seconds": 0.000386,
+      "context": {
+        "estimated_tokens": 318,
+        "compacted": false
+      }
+    },
+    {
+      "session_id": "session_2",
+      "turn": 6,
+      "user": "Summarize my progress and the study preference you have saved.",
+      "response": "Progress: Mathematics is completed; Biology and History remain. Saved study preference: evening only.",
+      "tool_calls": [],
+      "usage": {
+        "input_tokens": 859,
+        "output_tokens": 33,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tokens": 892,
+        "estimated": true,
+        "estimated_cost_usd": 0.003072
+      },
+      "api_calls": 1,
+      "latency_seconds": 0.00032,
+      "context": {
+        "estimated_tokens": 390,
+        "compacted": false
+      }
+    }
+  ]
+}

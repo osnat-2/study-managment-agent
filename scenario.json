@@ -1,0 +1,116 @@
+{
+  "scenario_id": "study_planning_persistent_preferences",
+  "description": "Two study-planning sessions that verify task tools, calendar lookups, persistent memory, and handling of conflicting preferences.",
+  "sessions": [
+    {
+      "session_id": "session_1",
+      "agent_instance": "agent_1",
+      "fresh_agent_instance": false,
+      "turns": [
+        {
+          "turn": 1,
+          "user": "Show me my upcoming study tasks and check my calendar for the days they are due.",
+          "expected": {
+            "tool_calls": [
+              {
+                "name": "get_study_tasks",
+                "arguments": {
+                  "filter_status": null
+                }
+              },
+              {
+                "name": "get_calendar_events",
+                "arguments": {
+                  "date_str": "2026-10-25"
+                }
+              },
+              {
+                "name": "get_calendar_events",
+                "arguments": {
+                  "date_str": "2026-10-28"
+                }
+              },
+              {
+                "name": "get_calendar_events",
+                "arguments": {
+                  "date_str": "2026-10-30"
+                }
+              }
+            ],
+            "response_should": "Summarize upcoming tasks with due dates, statuses, priorities, and any matching calendar events."
+          }
+        },
+        {
+          "turn": 2,
+          "user": "Mark my Mathematics task as completed.",
+          "expected": {
+            "tool_calls": [
+              {
+                "name": "update_task_status",
+                "arguments": {
+                  "task_id": 1,
+                  "status": "completed"
+                }
+              }
+            ],
+            "response_should": "Confirm that the Mathematics task was marked completed."
+          }
+        },
+        {
+          "turn": 3,
+          "user": "I prefer studying in the evening only. Please remember this for future planning.",
+          "expected": {
+            "memory_write": {
+              "key": "study_time_preference",
+              "value": "evening only",
+              "persistence": "disk"
+            },
+            "response_should": "Confirm that the evening-only preference was saved persistently."
+          }
+        }
+      ]
+    },
+    {
+      "session_id": "session_2",
+      "agent_instance": "agent_2",
+      "fresh_agent_instance": true,
+      "startup": {
+        "load_state_from_disk": true,
+        "required_state": [
+          "study_time_preference"
+        ]
+      },
+      "turns": [
+        {
+          "turn": 4,
+          "user": "Retrieve my saved study preference and recommend a schedule for my remaining tasks.",
+          "expected": {
+            "memory_read": {
+              "key": "study_time_preference"
+            },
+            "response_should": "Recommend a schedule using evening study sessions only and account for the task's current status and due date."
+          }
+        },
+        {
+          "turn": 5,
+          "user": "Actually, make me a study plan for tomorrow morning.",
+          "expected": {
+            "conflict_with_memory": {
+              "key": "study_time_preference",
+              "saved_value": "evening only",
+              "requested_value": "morning"
+            },
+            "response_should": "Point out the conflict and ask whether the user wants to change the saved preference; do not silently overwrite it."
+          }
+        },
+        {
+          "turn": 6,
+          "user": "Summarize my progress and the study preference you have saved.",
+          "expected": {
+            "response_should": "Summarize the completed Mathematics task, remaining tasks, and the saved evening-only preference; retain that preference unless the user explicitly confirmed a change."
+          }
+        }
+      ]
+    }
+  ]
+}

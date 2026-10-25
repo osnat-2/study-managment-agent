@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "subject": "Mathematics",
+    "due_date": "2026-10-25",
+    "status": "completed",
+    "priority": "high"
+  },
+  {
+    "id": 2,
+    "subject": "Biology",
+    "due_date": "2026-10-28",
+    "status": "not_started",
+    "priority": "medium"
+  },
+  {
+    "id": 3,
+    "subject": "History",
+    "due_date": "2026-10-30",
+    "status": "not_started",
+    "priority": "low"
+  }
+]
